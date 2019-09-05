@@ -1,8 +1,8 @@
 export default router => {
   router.get('/classes', getClasses);
-  router.get('/classes/:studentId', getClass);
+  router.get('/classes/:classId', getClass);
   router.post('/classes', createClass);
-  router.put('/classes/:studentId', editClass);
-  router.delete('/classes/:studentId', deleteClass);
-  router.get('/classes/:studentId/classes', getClassStudents);
+  router.put('/classes/:classId', editClass);
+  router.delete('/classes/:classId', deleteClass);
+  router.get('/classes/:classId/classes', getClassStudents);
 };

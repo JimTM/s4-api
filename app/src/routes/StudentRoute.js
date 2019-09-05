@@ -1,4 +1,5 @@
 import {
+  addClass,
   createStudent,
   deleteStudent,
   editStudent,
@@ -14,4 +15,5 @@ export default router => {
   router.put('/students/:studentId', editStudent);
   router.delete('/students/:studentId', deleteStudent);
   router.get('/students/:studentId/classes', getStudentClasses);
+  router.put('/students/:studentId/classes', addClass);
 };

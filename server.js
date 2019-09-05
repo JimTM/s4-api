@@ -1,4 +1,5 @@
 import studentsRoutes from './app/src/routes/StudentRoute';
+import classesRoutes from './app/src/routes/ClassesRoute';
 // importing the dependencies
 import mongoose from 'mongoose';
 
@@ -22,8 +23,10 @@ const router = express.Router();
 
 app.use('/api', router);
 
-//defining students API
+// defining students API
 studentsRoutes(router);
+// classes API
+classesRoutes(router);
 
 // starting the server
 app.listen(3001, () => {

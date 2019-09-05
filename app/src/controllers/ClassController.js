@@ -1,11 +1,7 @@
 import Class from '../models/Class';
 
 export const createClass = (request, response, next) => {
-  const aClass = {
-    code: request.body.code,
-    title: request.body.title,
-    description: request.body.description
-  };
+  const aClass = { ...request.body };
 
   Class.create(aClass, (error, aClass) => {
     if (error) {
@@ -17,7 +13,8 @@ export const createClass = (request, response, next) => {
 };
 
 export const getClasses = (request, response, next) => {
-  Class.get({}, (error, classes) => {
+  const query = { ...request.query };
+  Class.get(query, (error, classes) => {
     if (error) {
       response.status(500).send({ error });
     } else {
@@ -67,7 +64,31 @@ export const deleteClass = (request, response, next) => {
 };
 
 export const getClassStudents = (request, response, next) => {
-  const classId = request.params.classId;
-  const classes = Class.getStudents(classId);
-  response.status(200).send(classes);
+  const { classId } = request.params;
+  Class.get({ _id: classId }, 'students', (error, students) => {
+    if (error) {
+      response.status(500).send({ error });
+    } else {
+      response.status(200).send({ students });
+    }
+  });
+};
+
+export const addEstudent = (request, response, next) => {
+  const { classId } = request.params;
+  const { student } = request.body;
+  let students = [];
+  Class.get({ _id: classId }, 'students', (error, aClass) => {
+    if (!error) {
+      students = aClass[0].students;
+    }
+  });
+  students.push(student);
+  Class.addStudent({ _id: classId, students }, (error, aClass) => {
+    if (error) {
+      response.status(500).send({ error });
+    } else {
+      response.status(201).send(aClass);
+    }
+  });
 };

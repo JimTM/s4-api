@@ -7,12 +7,8 @@ classSchema.statics = {
     student.save(cb);
   },
 
-  get: function(query, cb) {
-    this.find(query, cb);
-  },
-
-  getByName: function(query, cb) {
-    this.find(query, cb);
+  get: function(query, field, cb) {
+    this.find(query, field, cb);
   },
 
   update: function(query, updateData, cb) {
@@ -21,6 +17,11 @@ classSchema.statics = {
 
   delete: function(query, cb) {
     this.findOneAndDelete(query, cb);
+  },
+
+  addStudent: function(query, cb) {
+    const { _id, students } = query;
+    this.findOneAndUpdate({ _id }, { students }, cb);
   }
 };
 
